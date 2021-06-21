@@ -3,8 +3,9 @@ from time import sleep
 from selenium import webdriver
 from utils import *
 import sys
+import os
 
-class WebdriverSession:
+class ChromeSession:
   '''Store a webdriver.Chrome session
 
   :param profile_folder: <string> of a path profile folder location

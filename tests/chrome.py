@@ -1,6 +1,6 @@
 import unittest
 from unittest.case import TestCase
-import utils
+import utils.chrome as utils
 import os
 # import argparse
 from session import WebdriverSession
@@ -9,7 +9,7 @@ import tracemalloc
 
 tracemalloc.start()
 
-class TestUtils(unittest.TestCase):
+class TestChromeUtils(unittest.TestCase):
 
   # parser = argparse.ArgumentParser()
   # parser.add_argument('-cv', '--chrome_version')
@@ -30,7 +30,7 @@ class TestUtils(unittest.TestCase):
     self.assertEqual(utils.get_chromedriver_version(os.getcwd()), self.__class__.chrome_version)
 
 
-class TestSession(unittest.TestCase):
+class TestChromeSession(unittest.TestCase):
 
   session = WebdriverSession()
   
