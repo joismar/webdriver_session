@@ -1,15 +1,15 @@
-import unittest
 from unittest.case import TestCase
 import utils.chrome as utils
 import os
 # import argparse
-from session import WebdriverSession
+from chrome_session import ChromeSession
 from selenium import webdriver
 import tracemalloc
+from time import sleep
 
 tracemalloc.start()
 
-class TestChromeUtils(unittest.TestCase):
+class TestChromeUtils(TestCase):
 
   # parser = argparse.ArgumentParser()
   # parser.add_argument('-cv', '--chrome_version')
@@ -30,20 +30,10 @@ class TestChromeUtils(unittest.TestCase):
     self.assertEqual(utils.get_chromedriver_version(os.getcwd()), self.__class__.chrome_version)
 
 
-class TestChromeSession(unittest.TestCase):
-
-  session = WebdriverSession()
-  
-  def test_setup_browser(self):
-    session = self.__class__.session
-    session.setup_browser()
-    self.assertIsNotNone(session.browser)
-    self.assertIsInstance(session.browser, webdriver.Chrome)
-    session.close()
-    self.assertIsNone(session.browser)
+class TestChromeSession(TestCase):
   
   def test_get_browser(self):
-    session = self.__class__.session
+    session = ChromeSession()
     browser = session.get_browser()
     self.assertIsNotNone(browser)
     self.assertIsNotNone(session.session_id)
@@ -51,7 +41,19 @@ class TestChromeSession(unittest.TestCase):
     self.assertIsInstance(browser, webdriver.Chrome)
     session.close()
     self.assertIsNone(session.browser)
+    
+  def test_profile_folder(self):
+    session = ChromeSession(profile_folder=True)
+    browser = session.get_browser()
+    self.assertTrue(os.path.isdir('ChromeProfile'))
 
+  def test_download_path(self):
+    session = ChromeSession(download_path=os.getcwd())
+    browser = session.get_browser()
+    browser.get('http://speedtest.tele2.net/')
+    browser.find_element_by_link_text('1MB').click()
+    sleep(2)
+    self.assertTrue(os.path.isfile('1MB.zip'))
 
 if __name__ == '__main__':
     unittest.main(verbosity=1)
