@@ -55,5 +55,12 @@ class TestChromeSession(TestCase):
     sleep(2)
     self.assertTrue(os.path.isfile('1MB.zip'))
 
+  def test_add_pref(self):
+    session = ChromeSession()
+    session.add_pref('test', False)
+    self.assertFalse(session.prefs['test'])
+
 if __name__ == '__main__':
-    unittest.main(verbosity=1)
+  # python -m unittest test.chrome.TestClass.test_method
+  #
+  unittest.main(verbosity=1)
