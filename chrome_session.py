@@ -4,7 +4,6 @@ from utils.chrome import *
 from session import Session
 import os
 
-
 class ChromeSession(Session):
   '''Store a webdriver.Chrome session
 

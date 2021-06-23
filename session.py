@@ -1,3 +1,4 @@
+import selenium
 from utils.logger import Logger
 from selenium import webdriver
 from utils import *
@@ -15,8 +16,8 @@ class Session:
     self.session_id = None
     self.executor_url = None
 
-      
-  def get_browser(self):
+  
+  def get_browser(self) -> webdriver.Remote:
     '''Configure and return a webdriver session
 
     :returns: A webdriver session
