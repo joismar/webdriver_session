@@ -1,9 +1,7 @@
-import logging
 from time import sleep
 from selenium import webdriver
-from utils import *
+from utils.chrome import *
 from session import Session
-import sys
 import os
 
 
@@ -24,8 +22,9 @@ class ChromeSession(Session):
       args=[]
     ):
 
-    Session.__init__(self, args)
+    Session.__init__(self)
 
+    self.args = args
     self.chrome = driver or webdriver.Chrome 
     self.download_path = download_path or os.getcwd()
     self.chromedriver_path = os.path.dirname(__file__)
@@ -40,25 +39,7 @@ class ChromeSession(Session):
     self.chromedriver_version = None
 
     self.profile_folder = f'{os.getcwd()}/ChromeProfile' if profile_folder else profile_folder
-      
-  def get_browser(self):
-    '''Configure and return a webdriver session
 
-    :returns: A <webdriver.Chrome> session
-    '''
-    self.setup_browser()
-
-    self.session_id = self.browser.session_id
-    self.executor_url = self.browser.command_executor._url
-
-    self.log.info(f'Session started - ID: {self.session_id} EXECUTOR_URL: {self.executor_url}')
-
-    return self.browser
-
-  def close(self):
-    self.browser.quit()
-    self.browser = None
-    self.log.info('Exited sucessffully.')
       
   def add_pref(self, key, value):
     '''Receive a key:pair and add to prefs dict
@@ -71,7 +52,8 @@ class ChromeSession(Session):
     
     self.prefs[key] = value 
 
-  def setup_browser(self):
+
+  def setup_browser(self) -> webdriver.Chrome:
     '''Perform webdriver setup
     '''
     updated = False
@@ -86,7 +68,7 @@ class ChromeSession(Session):
         if int(self.chromedriver_version) != int(self.chrome_version):
           self.log.info('Updating chromedriver...')
               
-          download_chromedriver()
+          download_chromedriver(self.chromedriver_path, self.chrome_version)
 
           self.chromedriver_version = get_chromedriver_version(self.chromedriver_path)
           self.chrome_version = self.get_chrome_version()
@@ -117,10 +99,10 @@ class ChromeSession(Session):
             
         options.add_argument('--start-maximized')
         
-        self.browser = self.chrome('{}\\chromedriver.exe'.format(self.chromedriver_path), options=options)
+        browser = self.chrome('{}\\chromedriver.exe'.format(self.chromedriver_path), options=options)
+        log.info(browser)
+        return browser
 
       else:
         sleep(3)
         continue
-
-      break
