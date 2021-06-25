@@ -35,6 +35,8 @@ class Session:
 
     return self.browser
 
+  def get_remote_browser(self, session_id, executor_url) -> webdriver.Remote:
+    pass
 
   def close(self):
     self.browser.quit()
