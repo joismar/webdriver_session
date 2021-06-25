@@ -1,7 +1,6 @@
 from unittest.case import TestCase
 import utils.chrome as utils
 import os
-# import argparse
 from chrome_session import ChromeSession
 from selenium import webdriver
 import tracemalloc
@@ -10,10 +9,6 @@ from time import sleep
 tracemalloc.start()
 
 class TestChromeUtils(TestCase):
-
-  # parser = argparse.ArgumentParser()
-  # parser.add_argument('-cv', '--chrome_version')
-  # args = parser.parse_args()
 
   chrome_version = '90'
 
@@ -60,7 +55,8 @@ class TestChromeSession(TestCase):
     session.add_pref('test', False)
     self.assertFalse(session.prefs['test'])
 
+
 if __name__ == '__main__':
-  # python -m unittest test.chrome.TestClass.test_method
+  # python -m unittest tests.chrome.TestClass.test_method
   #
   unittest.main(verbosity=1)
