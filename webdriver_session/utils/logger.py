@@ -23,13 +23,8 @@ class Logger(metaclass=LoggerMeta):
 
     def __setup(self):
         self.__log = logging.getLogger(self.name)
+        self.__log.level = logging.DEBUG
         self.__handler = logging.StreamHandler(sys.stdout)
-        self.__handler.setFormatter(
-            logging.Formatter(
-                '%(asctime)s %(levelname)s - %(funcName)s : Linha %(lineno)d - %(message)s'
-            )
-        )
-        self.__log.setLevel(logging.DEBUG)
         self.__log.addHandler(self.__handler)
 
     @property

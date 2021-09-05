@@ -1,9 +1,13 @@
 [tool.poetry]
-name = "WebdriverSession"
-version = "0.0.1"
+name = "local_webdriver_session"
+version = "0.1.0"
 description = ""
 authors = ["joismar <joismar@outlook.com>"]
 license = "MIT"
+packages = [
+    { include = "webdriver_session" },
+    { include = "webdriver_session/**/*.py" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -18,5 +22,5 @@ flake8 = "^3.9.2"
 unittest = "^0.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.0", "setuptools >= 40.6.0", "wheel"]
 build-backend = "poetry.core.masonry.api"
