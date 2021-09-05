@@ -3,4 +3,4 @@ __pycache__
 *.exe
 /.vscode
 *.egg-info
-/ChromeProfile
+*ChromeProfile

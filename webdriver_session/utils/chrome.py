@@ -36,7 +36,7 @@ def get_chromedriver_version(chromedriver_path):
         '{}\\chromedriver.exe --version'.format(chromedriver_path))
     output = stream.read()
     chromedriver_version = re.search(
-        '\d*\.\d*\.\d*\.\d*', output).group().split('.')[0]
+        r'\d*\.\d*\.\d*\.\d*', output).group().split('.')[0]
     stream.close()
 
     return chromedriver_version
