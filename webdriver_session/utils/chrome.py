@@ -2,9 +2,8 @@ import logging
 import os
 import re
 import requests
-from glob import glob
+from subprocess import run
 from zipfile import ZipFile
-from win32api import HIWORD, GetFileVersionInfo
 import wget
 
 log = logging.getLogger()
@@ -43,11 +42,38 @@ def get_chromedriver_version(chromedriver_path):
 
 
 def get_chrome_version():
-    path = glob('C:\Program *\Google\Chrome\Application\chrome.exe')
+    try:
+        p32 = run(
+            [
+                'powershell',
+                '-Command',
+                '''Get-ChildItem -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" |
+                Where {$_.GetValue("DisplayName") -match "Google Chrome"} |
+                Get-ItemProperty |
+                select -ExpandProperty DisplayVersion'''
+            ], capture_output=True
+        ).stdout
+        p64 = run(
+            [
+                'powershell',
+                '-Command',
+                '''Get-ChildItem -Path "HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall" |
+                Where {$_.GetValue("DisplayName") -match "Google Chrome"} |
+                Get-ItemProperty |
+                select -ExpandProperty DisplayVersion'''
+            ], capture_output=True
+        ).stdout
+    except Exception as e:
+        log.error(e)
+        raise
 
-    if not path:
-        raise FileNotFoundError("Google Chrome installation don't found")
-    info = GetFileVersionInfo(path[0], "\\")
-    ms = info['FileVersionMS']
+    if p32 and p64:
+        log.warning('Multiple Chrome versions are installed, please uninstall one.')
 
-    return str(HIWORD(ms))
+    output = ''
+
+    if p32: output = p32.decode('utf-8')
+    if p64: output = p64.decode('utf-8')
+
+    if output:
+        return output.split('.')[0]

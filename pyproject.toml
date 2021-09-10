@@ -12,7 +12,6 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 selenium = "^3.141.0"
-pywin32 = "^301"
 wget = "^3.2"
 requests = "^2.25.1"
 
