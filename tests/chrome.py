@@ -13,20 +13,20 @@ tracemalloc.start()
 # python -m unittest tests.chrome.TestChromeUtils
 class TestChromeUtils(TestCase):
 
-    chrome_version = '90'
+    chrome_version = '93'
 
-    # python -m unittest tests.chrome.TestChromeSession.test_get_chrome_version
+    # python -m unittest tests.chrome.TestChromeUtils.test_get_chrome_version
     def test_get_chrome_version(self):
         actual = utils.get_chrome_version()
-        if self.assertRegex(self.chrome_version, '\d*'):
-            self.__class__.chrome_version = actual
+        self.assertRegex(self.chrome_version, '\d*')
+        self.assertTrue(self.__class__.chrome_version == actual)
 
-    # python -m unittest tests.chrome.TestChromeSession.test_download_chromedriver
+    # python -m unittest tests.chrome.TestChromeUtils.test_download_chromedriver
     def test_download_chromedriver(self):
         self.assertTrue(utils.download_chromedriver(
             os.getcwd(), self.__class__.chrome_version))
 
-    # python -m unittest tests.chrome.TestChromeSession.test_get_chromedriver_version
+    # python -m unittest tests.chrome.TestChromeUtils.test_get_chromedriver_version
     def test_get_chromedriver_version(self):
         self.assertRegex(utils.get_chromedriver_version(os.getcwd()), '\d*')
         self.assertEqual(utils.get_chromedriver_version(
