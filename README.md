@@ -8,7 +8,7 @@ This package is intended to help the developer with webdriver instances, such as
 # execute in root path of project
 python -m pip install .
 # FROM GIT
-pip install git+https://github.com/joismar/webdriver_session.git#egg=webdriver_session
+pip install --upgrade git+https://github.com/joismar/webdriver_session.git
 ```
 
 ## Usage example
