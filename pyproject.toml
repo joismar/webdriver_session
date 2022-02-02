@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "local_webdriver_session"
+name = "webdriver_session"
 version = "0.1.0"
 description = ""
 authors = ["joismar <joismar@outlook.com>"]
