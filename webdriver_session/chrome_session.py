@@ -70,7 +70,7 @@ class ChromeSession(Session):
 
                     self.chromedriver_version = get_chromedriver_version(
                         self.chromedriver_path)
-                    self.chrome_version = self.get_chrome_version()
+                    self.chrome_version = get_chrome_version()
 
                     updated = int(self.chromedriver_version) == int(
                         self.chrome_version)

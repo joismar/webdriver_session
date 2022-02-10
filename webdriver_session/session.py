@@ -25,6 +25,7 @@ class Session:
         except AttributeError as e:
             self.log.error(e)
             self.log.warning('Method setup_browser should be implemented.')
+            return False
 
         self.session_id = self.browser.session_id
         self.executor_url = self.browser.command_executor._url
