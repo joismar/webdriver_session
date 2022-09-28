@@ -13,7 +13,21 @@ pip install --upgrade git+https://github.com/joismar/webdriver_session.git
 
 ## Usage example
 
-Soon.
+```python
+from webdriver_session import ChromeSession
+
+session = ChromeSession(
+  profile_folder=False, # True if you want to generate profile folder inside the project folder and persist it
+  download_path=None, # path for files downloaded in browser
+  driver=None, # if you want to specify a custom webdriver class
+  args=[], # if you want pass browser args, equivalent to options<ChromeOptions>.add_argument('--argument_here')
+)
+
+# get a new browser, a webdriver file will download automatically
+browser = session.get_browser()
+
+browser.get('https://google.com')
+```
 
 ## Development setup
 
