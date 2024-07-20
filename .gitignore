@@ -2,6 +2,7 @@ __pycache__
 
 *.exe
 /.vscode
+.venv
 *.egg-info
 *ChromeProfile
 /poetry.lock
