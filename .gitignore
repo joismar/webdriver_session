@@ -5,5 +5,5 @@ __pycache__
 .venv
 *.egg-info
 *ChromeProfile
-/poetry.lock
+poetry.lock
 /temp
