@@ -1,5 +1,6 @@
 from time import sleep
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from .utils.chrome import get_chrome_version, get_chromedriver_version, download_chromedriver
 from .session import Session
 import os
@@ -102,8 +103,9 @@ class ChromeSession(Session):
 
                 options.add_argument('--start-maximized')
 
-                browser = self.chrome('{}\\chromedriver.exe'.format(
-                    self.chromedriver_path), options=options)
+                service = Service(executable_path=os.path.join(
+                    self.chromedriver_path, 'chromedriver.exe'))
+                browser = self.chrome(service=service, options=options)
 
                 self.log.info(browser)
                 return browser

@@ -2,6 +2,7 @@ import logging
 import os
 import re
 import requests
+import shutil
 from subprocess import run
 from zipfile import ZipFile
 import wget
@@ -10,15 +11,38 @@ log = logging.getLogger()
 
 
 def download_chromedriver(chromedriver_path, chrome_version):
+    if chrome_version <= '115':
+        try:
+            latest = requests.get(
+                f'https://chromedriver.storage.googleapis.com/LATEST_RELEASE_{chrome_version}')
+            wget.download(
+                f'https://chromedriver.storage.googleapis.com/{latest.text}/chromedriver_win32.zip', f'{chromedriver_path}\\chromedriver_win32.zip')
+
+            with ZipFile('{}\\chromedriver_win32.zip'.format(chromedriver_path), 'r') as zip_ref:
+                zip_ref.extractall(chromedriver_path)
+
+            os.remove(f'{chromedriver_path}\\chromedriver_win32.zip')
+
+            if os.path.exists(f'{chromedriver_path}\\chromedriver.exe'):
+                return True
+            else:
+                return False
+        except Exception as e:
+            log.error(e)
+            return False
+
     try:
         latest = requests.get(
-            f'https://chromedriver.storage.googleapis.com/LATEST_RELEASE_{chrome_version}')
+            f'https://googlechromelabs.github.io/chrome-for-testing/LATEST_RELEASE_{chrome_version}')
         wget.download(
-            f'https://chromedriver.storage.googleapis.com/{latest.text}/chromedriver_win32.zip', f'{chromedriver_path}\\chromedriver_win32.zip')
-
-        with ZipFile('{}\\chromedriver_win32.zip'.format(chromedriver_path), 'r') as zip_ref:
+	        f'https://storage.googleapis.com/chrome-for-testing-public/{latest.text}/win32/chromedriver-win32.zip',  f'{chromedriver_path}\\chromedriver_win32.zip')
+        with ZipFile(fr'{chromedriver_path}\\chromedriver_win32.zip') as zip_ref:
             zip_ref.extractall(chromedriver_path)
 
+        src = os.path.join(chromedriver_path, 'chromedriver-win32', 'chromedriver.exe')
+        dst = os.path.join(chromedriver_path, 'chromedriver.exe')
+        shutil.move(src, dst)
+        shutil.rmtree(os.path.join(chromedriver_path, 'chromedriver-win32'))
         os.remove(f'{chromedriver_path}\\chromedriver_win32.zip')
 
         if os.path.exists(f'{chromedriver_path}\\chromedriver.exe'):

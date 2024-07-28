@@ -40,6 +40,7 @@ python -m pip install -e .
 ```
 
 ### Tests
+
 ```sh
 # before development setup described above
 python -m unittest <tests-path> # see tests for more informations
@@ -47,11 +48,13 @@ python -m unittest <tests-path> # see tests for more informations
 
 ## Release History
 
+* 0.2.1
+  * Include new class Service introduced in selenium 4 to start a webdriver.
 * 0.2.0
-    * Second dev release, with build support.
-    * Webdriver Remote Session support.
+  * Second dev release, with build support.
+  * Webdriver Remote Session support.
 * 0.1.0
-    * First dev reselase, with base classes.
+  * First dev reselase, with base classes.
 
 ## Meta
 
@@ -63,7 +66,7 @@ Distributed under the MIT license. See ``LICENSE`` for more information.
 
 ## Contributing
 
-1. Fork it (<https://github.com/joismar/webdriver_session/fork>)
+1. Fork it ([https://github.com/joismar/webdriver_session/fork](https://github.com/joismar/webdriver_session/fork))
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
